@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  duplicati:
+    image: ghcr.io/linuxserver/duplicati
+    container_name: duplicati
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./scripts:/scripts
+      # REQUIRED : Data source to backup
+      - /path/to/data/source:/source/data:ro
+      # OPTIONAL : Loacl directory where the data blocks are temporarily written
+      # - /path/to/tmp/directory:/tmp
+      # OPTIONAL : Backup restoration point
+      # - /path/to/restoration/point:/restore
+      # OPTIONAL : Nextcloud database dump backup
+      # - /path/to/database/backup/directory:/source/db_bak:ro
+      # OPTIONAL : Nextcloud maintenance mode switching
+      # - /path/to/nextcloud/config.php:/nextcloud/config.php
+    ports:
+      - 8200:8200
+    restart: unless-stopped
